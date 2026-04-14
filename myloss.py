@@ -11,13 +11,13 @@ import torch.nn as nn
 
 def rgb_to_lab(tensor):
 
-    rgb_np = tensor.detach().permute(0, 2, 3, 1).cpu().numpy()  # 转换为(batch_size, height, width, 3)
+    rgb_np = tensor.detach().permute(0, 2, 3, 1).cpu().numpy() 
 
     rgb_np = np.clip(rgb_np, 0, 1)
 
     lab_np = color.rgb2lab(rgb_np)
 
-    lab_tensor = torch.from_numpy(lab_np).permute(0, 3, 1, 2).float().to(tensor.device)  # 转换为(batch_size, 3, height, width)
+    lab_tensor = torch.from_numpy(lab_np).permute(0, 3, 1, 2).float().to(tensor.device)  
     return lab_tensor
 
 
@@ -31,7 +31,7 @@ def ciede2000_loss(y_true, y_pred):
     diffs = []
 
     for i in range(y_true_lab.size(0)):
-        # 提取单个样本的Lab值
+        
         y_true_lab_sample = y_true_lab[i].detach().cpu().numpy()
         y_pred_lab_sample = y_pred_lab[i].detach().cpu().numpy()
 
@@ -138,9 +138,9 @@ class ReflectanceSparsityLoss:
     def __init__(self, r_optimized):
 
         if len(r_optimized.shape) != 4:
-            raise ValueError(f"反射分量R需为4维张量[B,C,H,W]，当前维度：{len(r_optimized.shape)}")
+            raise ValueError(f"：{len(r_optimized.shape)}")
 
-        self.r_optimized = r_optimized  # 存储反射分量为类属性
+        self.r_optimized = r_optimized  
 
     def __call__(self):
 
